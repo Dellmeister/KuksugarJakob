@@ -11,15 +11,18 @@ import pdfplumber
 from io import BytesIO
 
 # Function to load CSS
-def load_css(styles.css):
+def load_css(file_name):
     # Get the directory of the current script
     script_dir = os.path.dirname(__file__)
 
     # Construct the absolute path to the CSS file
-    file_path = os.path.join(script_dir, styles.css)
+    file_path = os.path.join(script_dir, file_name)
 
     with open(file_path) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+# Load the CSS
+load_css('styles.css')
 
 def get_recommendations(text, gender, experience, age, language):
     if language == 'Swedish':
