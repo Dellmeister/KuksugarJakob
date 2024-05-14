@@ -53,6 +53,7 @@ st.sidebar.title('Options')
 # Add a language selection option
 language = st.sidebar.radio('Language', ['English', 'Swedish'])
 
+Employment type = st.sidebar.radio('Employment type', ['Full time', 'Part time'])
 gender = st.sidebar.radio('Gender Preference', ['N/A', 'Male', 'Female', 'Non-binary'])
 experience = st.sidebar.radio('Experience Preference', ['N/A', 'Entry Level', 'Mid Level', 'Experienced'])
 age = st.sidebar.radio('Age', ['N/A', 'Young', 'Middle aged', 'Old'])
