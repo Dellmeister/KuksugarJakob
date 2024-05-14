@@ -62,7 +62,7 @@ experience = st.sidebar.radio('Experience Preference', ['N/A', 'Entry Level', 'M
 age = st.sidebar.radio('Age', ['N/A', 'Young', 'Middle aged', 'Old'])
 location = st.sidebar.radio('Location', ['N/A', 'On-Site', 'Hybrid', 'Remote'])
 driving_license = st.sidebar.radio('Driving License', ['N/A', 'Required', 'Not Required'])
-education = st.sidebar.radio('Education', ['N/A', 'Gymnasial', 'Eftergymnasial/Universitet']
+education = st.sidebar.radio('Education', ['N/A', 'Gymnasial', 'Eftergymnasial/Universitet'])
 
 # Main Area
 st.title('CoRecruit AI')
