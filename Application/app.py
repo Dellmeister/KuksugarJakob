@@ -27,9 +27,11 @@ load_css('styles.css')
 def get_recommendations(text, gender, experience, age, language):
     if language == 'Swedish':
         prompt = f"{text}\n\nGivet att den ideala kandidaten är {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan denna jobbannons förbättras?"
+        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kanditaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
     else:  # Default to English
         prompt = f"{text}\n\nGiven that the ideal candidate is {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, how could this job posting be improved?"
+        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kanditaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Engelska."
         system_message = "You are a helpful assistant."
 
     response = client.completions.create(model="gpt-3.5-turbo-instruct",
