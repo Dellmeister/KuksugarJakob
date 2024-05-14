@@ -2,20 +2,6 @@ import os
 import streamlit as st
 from openai import OpenAI
 
-# Set up the custom theme
-st.set_page_config(
-    page_title="Custom Theme Demo",
-    layout="wide",
-    initial_sidebar_state="expanded",
-    theme={
-        "primaryColor": "#F63366",
-        "backgroundColor": "#FFFFFF",
-        "secondaryBackgroundColor": "#F0F2F6",
-        "textColor": "#262730",
-        "font": "sans serif",
-    },
-)
-
 client = OpenAI()
 from openai import OpenAI
 
@@ -24,16 +10,16 @@ client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 import pdfplumber
 from io import BytesIO
 
-## Function to load CSS
-#def load_css(file_name):
-#    # Get the directory of the current script
-#    script_dir = os.path.dirname(__file__)
+# Function to load CSS
+def load_css(file_name):
+    # Get the directory of the current script
+    script_dir = os.path.dirname(__file__)
 
-#    # Construct the absolute path to the CSS file
-#    file_path = os.path.join(script_dir, file_name)
+    # Construct the absolute path to the CSS file
+    file_path = os.path.join(script_dir, file_name)
 
-#    with open(file_path) as f:
-#        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+    with open(file_path) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 def get_recommendations(text, gender, experience, age, language):
     if language == 'Swedish':
