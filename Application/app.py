@@ -24,22 +24,23 @@ def load_css(file_name):
 # Load the CSS
 load_css('styles.css')
 
-def get_recommendations(text, gender, experience, age, language):
+def get_recommendations(text, gender, experience, age, language, employment_type, location, driving_license, education):
     if language == 'Swedish':
-        prompt = f"{text}\n\nGivet att den ideala kandidaten är {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan denna jobbannons förbättras?"
-        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kanditaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
+        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
     else:  # Default to English
-        prompt = f"{text}\n\nGiven that the ideal candidate is {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, how could this job posting be improved?"
-        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kanditaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Engelska."
+        prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
         system_message = "You are a helpful assistant."
 
-    response = client.completions.create(model="gpt-3.5-turbo-instruct",
-    prompt=prompt,
-    max_tokens=500,
-    temperature=0.7)
-
-    return response.choices[0].text.strip()
+    response = client.chat.completions.create(
+        model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",  # Use your fine-tuned chat model
+        messages=[
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=500,
+        temperature=0.7)
+    return response.choices[0].message.content
 
 # Function to read file
 def read_file(file):
