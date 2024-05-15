@@ -1,11 +1,12 @@
 import os
 import streamlit as st
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 from io import BytesIO
 from docx import Document
 
 # Initialize OpenAI client with the API key from Streamlit secrets
-openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Function to load CSS
 def load_css(file_name):
@@ -29,16 +30,14 @@ def get_recommendations(text, gender, experience, age, language, employment_type
         prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
         system_message = "You are a helpful assistant."
 
-    response = openai.ChatCompletion.create(
-        model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",  # Use your fine-tuned chat model
-        messages=[
-            {"role": "system", "content": system_message},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=500,
-        temperature=0.7
-    )
-    return response["choices"][0]["message"]["content"]
+    response = client.chat.completions.create(model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",  # Use your fine-tuned chat model
+    messages=[
+        {"role": "system", "content": system_message},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=500,
+    temperature=0.7)
+    return response.choices[0].message.content
 
 # Function to read file
 def read_file(file):
@@ -84,11 +83,11 @@ uploaded_file = st.file_uploader("Upload a job posting", type=['txt', 'docx'])
 if uploaded_file is not None:
     # Process the text from the job posting
     text = read_file(uploaded_file)
-    
+
     # Display the extracted text to verify
     st.subheader("Extracted Text from the Uploaded File:")
     st.write(text)
-    
+
     # Use the GPT API to recommend changes if text extraction is successful
     if text:
         recommendations = get_recommendations(text, gender, experience, age, language, employment_type, location, driving_license, education)
