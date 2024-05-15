@@ -32,13 +32,16 @@ def get_recommendations(text, employment_type, gender, experience, age, location
         system_message = "You are a helpful assistant."
 
     try:
-        response = client.completions.create(
+        response = client.chat_completions.create(
             model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
-            prompt=prompt,
+            messages=[
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": prompt}
+            ],
             max_tokens=500,
             temperature=0.7
         )
-        return response.choices[0].text.strip()
+        return response.choices[0].message['content'].strip()
     except Exception as e:
         st.error(f"Error: {e}")
         return None
