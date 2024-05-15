@@ -24,7 +24,7 @@ load_css('styles.css')
 
 def get_recommendations(text, gender, experience, age, language, employment_type, location, driving_license, education):
     if language == 'Swedish':
-        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
+        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
     else:  # Default to English
         prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
@@ -44,10 +44,21 @@ def get_recommendations(text, gender, experience, age, language, employment_type
 # Function to read file
 def read_file(file):
     if file.type == 'application/pdf':
-        with pdfplumber.open(BytesIO(file.getvalue())) as pdf:
-            return ' '.join(page.extract_text() for page in pdf.pages if page.extract_text())
+        try:
+            with pdfplumber.open(BytesIO(file.getvalue())) as pdf:
+                text = ' '.join(page.extract_text() for page in pdf.pages if page.extract_text())
+                if not text.strip():
+                    raise ValueError("No text found in PDF pages.")
+                return text
+        except Exception as e:
+            st.error(f"Error reading PDF file: {e}")
+            return ""
     else:
-        return file.getvalue().decode()
+        try:
+            return file.getvalue().decode()
+        except Exception as e:
+            st.error(f"Error reading file: {e}")
+            return ""
 
 # Load CSS
 load_css('styles.css')
