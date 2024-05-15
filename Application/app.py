@@ -1,14 +1,11 @@
 import os
 import streamlit as st
-from openai import OpenAI
-
-client = OpenAI()
-from openai import OpenAI
-
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-
+import openai
 import pdfplumber
 from io import BytesIO
+
+# Initialize OpenAI client with the API key
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Function to load CSS
 def load_css(file_name):
@@ -24,20 +21,20 @@ def load_css(file_name):
 # Load the CSS
 load_css('styles.css')
 
-def get_recommendations(text, gender, experience, age, language):
+def get_recommendations(text, gender, experience, age, language, employment_type, location, driving_license, education):
     if language == 'Swedish':
         prompt = f"{text}\n\nGivet att den ideala kandidaten är {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan denna jobbannons förbättras?"
-        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kanditaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
     else:  # Default to English
-        prompt = f"{text}\n\nGiven that the ideal candidate is {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, how could this job posting be improved?"
-        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kanditaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Engelska."
+        prompt = f"{text}\n\nGiven that the ideal candidate is {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license}, and {education}, how could this job posting be improved?"
         system_message = "You are a helpful assistant."
 
-    response = client.completions.create(model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
-    prompt=prompt,
-    max_tokens=500,
-    temperature=0.7)
+    response = openai.Completion.create(
+        model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
+        prompt=prompt,
+        max_tokens=500,
+        temperature=0.7
+    )
 
     return response.choices[0].text.strip()
 
@@ -48,9 +45,6 @@ def read_file(file):
             return ' '.join(page.extract_text() for page in pdf.pages)
     else:
         return file.getvalue().decode()
-
-# Load CSS
-load_css('styles.css')
 
 # Sidebar
 st.sidebar.title('Options')
@@ -76,5 +70,5 @@ if uploaded_file is not None:
     text = read_file(uploaded_file)
 
     # Use the GPT API to recommend changes
-    recommendations = get_recommendations(text, gender, experience, age, language)
+    recommendations = get_recommendations(text, gender, experience, age, language, employment_type, location, driving_license, education)
     st.write(recommendations)
