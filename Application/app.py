@@ -1,23 +1,18 @@
 import os
 import streamlit as st
 from openai import OpenAI
-
-client = OpenAI()
-from openai import OpenAI
-
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-
 import pdfplumber
 from io import BytesIO
+
+# Initialize OpenAI client
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # Function to load CSS
 def load_css(file_name):
     # Get the directory of the current script
     script_dir = os.path.dirname(__file__)
-
     # Construct the absolute path to the CSS file
     file_path = os.path.join(script_dir, file_name)
-
     with open(file_path) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
@@ -48,9 +43,6 @@ def read_file(file):
             return ' '.join(page.extract_text() for page in pdf.pages)
     else:
         return file.getvalue().decode()
-
-# Load CSS
-load_css('styles.css')
 
 # Sidebar
 st.sidebar.title('Options')
