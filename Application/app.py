@@ -32,12 +32,16 @@ def get_recommendations(text, gender, experience, age, language):
         prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
         system_message = "You are a helpful assistant."
 
-    response = client.completions.create(model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
-    prompt=prompt,
-    max_tokens=500,
-    temperature=0.7)
-
-    return response.choices[0].text.strip()
+    response = client.chat.create(
+        model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
+        messages=[
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=500,
+        temperature=0.7
+    )
+    return response
 
 # Function to read file
 def read_file(file):
