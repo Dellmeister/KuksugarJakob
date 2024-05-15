@@ -1,5 +1,10 @@
+gammal:
+
 import os
 import streamlit as st
+from openai import OpenAI
+
+client = OpenAI()
 from openai import OpenAI
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
@@ -55,18 +60,13 @@ st.sidebar.title('Options')
 # Add a language selection option
 language = st.sidebar.radio('Language', ['English', 'Swedish'])
 
-# Create columns for horizontal layout
-col1, col2, col3 = st.sidebar.columns(3)
-col4, col5, col6 = st.sidebar.columns(3)
-
-# Organize radio buttons in columns for a horizontal layout
-employment_type = col1.radio('Employment Type', ['N/A', 'Full time', 'Part time'])
-gender = col2.radio('Gender Preference', ['N/A', 'Male', 'Female', 'Non-binary'])
-experience = col3.radio('Experience Preference', ['N/A', 'Entry Level', 'Mid Level', 'Experienced'])
-age = col4.radio('Age', ['N/A', 'Young', 'Middle aged', 'Old'])
-location = col5.radio('Location', ['N/A', 'On-Site', 'Hybrid', 'Remote'])
-driving_license = col6.radio('Driving License', ['N/A', 'Required', 'Not Required'])
-education = col1.radio('Education', ['N/A', 'Gymnasial', 'Eftergymnasial/Universitet'])
+employment_type = st.sidebar.radio('Employment Type', ['N/A', 'Full time', 'Part time'])
+gender = st.sidebar.radio('Gender Preference', ['N/A', 'Male', 'Female', 'Non-binary'])
+experience = st.sidebar.radio('Experience Preference', ['N/A', 'Entry Level', 'Mid Level', 'Experienced'])
+age = st.sidebar.radio('Age', ['N/A', 'Young', 'Middle aged', 'Old'])
+location = st.sidebar.radio('Location', ['N/A', 'On-Site', 'Hybrid', 'Remote'])
+driving_license = st.sidebar.radio('Driving License', ['N/A', 'Required', 'Not Required'])
+education = st.sidebar.radio('Education', ['N/A', 'Gymnasial', 'Eftergymnasial/Universitet'])
 
 # Main Area
 st.title('CoRecruit AI')
@@ -80,4 +80,3 @@ if uploaded_file is not None:
     # Use the GPT API to recommend changes
     recommendations = get_recommendations(text, gender, experience, age, language)
     st.write(recommendations)
-
