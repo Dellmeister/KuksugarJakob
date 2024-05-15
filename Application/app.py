@@ -2,9 +2,6 @@ import os
 import streamlit as st
 from openai import OpenAI
 
-client = OpenAI()
-from openai import OpenAI
-
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 import pdfplumber
@@ -33,7 +30,7 @@ def get_recommendations(text, gender, experience, age, language):
         system_message = "You are a helpful assistant."
 
     response = client.chat.create(
-        model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
+        model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",  # Use your fine-tuned chat model
         messages=[
             {"role": "system", "content": system_message},
             {"role": "user", "content": prompt}
@@ -41,7 +38,7 @@ def get_recommendations(text, gender, experience, age, language):
         max_tokens=500,
         temperature=0.7
     )
-    return response
+    return response["choices"][0]["message"]["content"]
 
 # Function to read file
 def read_file(file):
