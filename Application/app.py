@@ -1,12 +1,13 @@
 import os
 import streamlit as st
 import openai
+import pdfplumber
+from io import BytesIO
+from pdf2image import convert_from_bytes
+import pytesseract
 
 # Initialize OpenAI client with the API key from Streamlit secrets
 openai.api_key = st.secrets["OPENAI_API_KEY"]
-
-import pdfplumber
-from io import BytesIO
 
 # Function to load CSS
 def load_css(file_name):
@@ -41,7 +42,7 @@ def get_recommendations(text, gender, experience, age, language, employment_type
     )
     return response["choices"][0]["message"]["content"]
 
-# Function to read file
+# Function to read file with OCR fallback
 def read_file(file):
     if file.type == 'application/pdf':
         try:
@@ -51,8 +52,16 @@ def read_file(file):
                     raise ValueError("No text found in PDF pages.")
                 return text
         except Exception as e:
-            st.error(f"Error reading PDF file: {e}")
-            return ""
+            st.warning(f"Standard PDF text extraction failed: {e}. Trying OCR...")
+            try:
+                images = convert_from_bytes(file.getvalue())
+                text = ' '.join(pytesseract.image_to_string(image) for image in images)
+                if not text.strip():
+                    raise ValueError("No text found in OCR processed images.")
+                return text
+            except Exception as ocr_e:
+                st.error(f"OCR text extraction failed: {ocr_e}")
+                return ""
     else:
         try:
             return file.getvalue().decode()
