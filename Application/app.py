@@ -1,8 +1,9 @@
 import os
 import streamlit as st
-from openai import OpenAI
+import openai
 
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+# Initialize OpenAI client with the API key from Streamlit secrets
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 import pdfplumber
 from io import BytesIO
@@ -29,7 +30,7 @@ def get_recommendations(text, gender, experience, age, language):
         prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
         system_message = "You are a helpful assistant."
 
-    response = client.chat.create(
+    response = openai.ChatCompletion.create(
         model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",  # Use your fine-tuned chat model
         messages=[
             {"role": "system", "content": system_message},
