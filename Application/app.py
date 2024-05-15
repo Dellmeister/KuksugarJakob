@@ -25,7 +25,7 @@ load_css('styles.css')
 
 def get_recommendations(text, gender, experience, age, language):
     if language == 'Swedish':
-        prompt = f"{text}\n\nGivet att den ideala kandidaten är {gender}, {experience}, och {age}, hur kan denna jobbannons förbättras? Läs igenom uppladad text. Svara genom att skriva ut specifika delar av texten som kan förbätrras eller ord som kan ändras."
+        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kanditaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
     else:  # Default to English
         prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
@@ -57,9 +57,13 @@ st.sidebar.title('Options')
 # Add a language selection option
 language = st.sidebar.radio('Language', ['English', 'Swedish'])
 
+employment_type = st.sidebar.radio('Employment Type', ['N/A', 'Full time', 'Part time'])
 gender = st.sidebar.radio('Gender Preference', ['N/A', 'Male', 'Female', 'Non-binary'])
 experience = st.sidebar.radio('Experience Preference', ['N/A', 'Entry Level', 'Mid Level', 'Experienced'])
 age = st.sidebar.radio('Age', ['N/A', 'Young', 'Middle aged', 'Old'])
+location = st.sidebar.radio('Location', ['N/A', 'On-Site', 'Hybrid', 'Remote'])
+driving_license = st.sidebar.radio('Driving License', ['N/A', 'Required', 'Not Required'])
+education = st.sidebar.radio('Education', ['N/A', 'Gymnasial', 'Eftergymnasial/Universitet'])
 
 # Main Area
 st.title('CoRecruit AI')
