@@ -2,6 +2,9 @@ import os
 import streamlit as st
 from openai import OpenAI
 
+client = OpenAI()
+from openai import OpenAI
+
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 import pdfplumber
@@ -23,23 +26,20 @@ load_css('styles.css')
 
 def get_recommendations(text, gender, experience, age, language):
     if language == 'Swedish':
-        user_message = f"{text}\n\nGivet att den ideala kandidaten är {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan denna jobbannons förbättras?"
+        prompt = f"{text}\n\nGivet att den ideala kandidaten är {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan denna jobbannons förbättras?"
+        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kanditaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
     else:  # Default to English
-        user_message = f"{text}\n\nGiven that the ideal candidate is {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, how could this job posting be improved?"
+        prompt = f"{text}\n\nGiven that the ideal candidate is {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, how could this job posting be improved?"
+        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kanditaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Engelska."
         system_message = "You are a helpful assistant."
 
-    response = client.chat.create(
-        model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
-        messages=[
-            {"role": "system", "content": system_message},
-            {"role": "user", "content": user_message}
-        ],
-        max_tokens=500,
-        temperature=0.7
-    )
+    response = client.completions.create(model="gpt-3.5-turbo-instruct",
+    prompt=prompt,
+    max_tokens=500,
+    temperature=0.7)
 
-    return response.choices[0].message['content'].strip()
+    return response.choices[0].text.strip()
 
 # Function to read file
 def read_file(file):
