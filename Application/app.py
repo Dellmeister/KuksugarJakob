@@ -1,10 +1,8 @@
 import os
 import streamlit as st
 import openai
-import pdfplumber
 from io import BytesIO
-from pdf2image import convert_from_bytes
-import pytesseract
+from docx import Document
 
 # Initialize OpenAI client with the API key from Streamlit secrets
 openai.api_key = st.secrets["OPENAI_API_KEY"]
@@ -42,32 +40,24 @@ def get_recommendations(text, gender, experience, age, language, employment_type
     )
     return response["choices"][0]["message"]["content"]
 
-# Function to read file with OCR fallback
+# Function to read file
 def read_file(file):
-    if file.type == 'application/pdf':
-        try:
-            with pdfplumber.open(BytesIO(file.getvalue())) as pdf:
-                text = ' '.join(page.extract_text() for page in pdf.pages if page.extract_text())
-                if not text.strip():
-                    raise ValueError("No text found in PDF pages.")
-                return text
-        except Exception as e:
-            st.warning(f"Standard PDF text extraction failed: {e}. Trying OCR...")
-            try:
-                images = convert_from_bytes(file.getvalue())
-                text = ' '.join(pytesseract.image_to_string(image) for image in images)
-                if not text.strip():
-                    raise ValueError("No text found in OCR processed images.")
-                return text
-            except Exception as ocr_e:
-                st.error(f"OCR text extraction failed: {ocr_e}")
-                return ""
-    else:
+    if file.type == 'text/plain':
         try:
             return file.getvalue().decode()
         except Exception as e:
-            st.error(f"Error reading file: {e}")
+            st.error(f"Error reading text file: {e}")
             return ""
+    elif file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        try:
+            doc = Document(BytesIO(file.getvalue()))
+            return '\n'.join([para.text for para in doc.paragraphs])
+        except Exception as e:
+            st.error(f"Error reading DOCX file: {e}")
+            return ""
+    else:
+        st.error("Unsupported file type.")
+        return ""
 
 # Load CSS
 load_css('styles.css')
@@ -89,7 +79,7 @@ education = st.sidebar.radio('Education', ['N/A', 'Gymnasial', 'Eftergymnasial/U
 # Main Area
 st.title('CoRecruit AI')
 
-uploaded_file = st.file_uploader("Upload a job posting", type=['txt', 'pdf'])
+uploaded_file = st.file_uploader("Upload a job posting", type=['txt', 'docx'])
 
 if uploaded_file is not None:
     # Process the text from the job posting
