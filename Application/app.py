@@ -34,7 +34,7 @@ def get_recommendations(text, gender, experience, age, language):
         prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kanditaten för min jobbannons har följande egenskaper: {employment_type}, {gender}, {experience}, {age}, {location}, {driving_license} och {education}, hur kan min jobbannons förbättras för att bättre attrahera den ideala kandidaten? Skriv svaret på Engelska."
         system_message = "You are a helpful assistant."
 
-    response = client.completions.create(model="gpt-3.5-turbo-0125",
+    response = client.completions.create(model="gpt-3.5-turbo-instruct",
     prompt=prompt,
     max_tokens=500,
     temperature=0.7)
