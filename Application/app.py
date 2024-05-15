@@ -25,7 +25,7 @@ load_css('styles.css')
 
 def get_recommendations(text, gender, experience, age, language):
     if language == 'Swedish':
-        prompt = f"{text}\n\nGivet att den ideala kandidaten är {gender}, {experience}, och {age}, hur kan denna jobbannons förbättras?"
+        prompt = f"{text}\n\nGivet att den ideala kandidaten är {gender}, {experience}, och {age}, hur kan denna jobbannons förbättras? Svara genom att skriva ut specifika delar av texten som kan förbätrras eller ord som kan ändras."
         system_message = "Du är en hjälpsam assistent."
     else:  # Default to English
         prompt = f"{text}\n\nGiven that the ideal candidate is {gender}, {experience}, and {age}, how could this job posting be improved?"
