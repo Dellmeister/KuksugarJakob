@@ -1,6 +1,6 @@
 import os
 import streamlit as st
-import openai  # Use the openai library directly
+import openai
 import pdfplumber
 from io import BytesIO
 
@@ -33,7 +33,7 @@ def get_recommendations(text, employment_type, gender, experience, age, location
 
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": prompt}
