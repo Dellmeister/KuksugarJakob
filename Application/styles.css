@@ -27,7 +27,7 @@ button {
 
 /* Custom styles for Streamlit sidebar */
 .css-1d391kg {
-    padding-top: 20px; /* Adjust this value to move sidebar content higher */
+    padding-top: 1px; /* Adjust this value to move sidebar content higher */
 }
 
 .css-1d391kg .css-1lcbmhc, .css-1d391kg .css-1k7bsiw {
