@@ -1,11 +1,11 @@
 import os
 import streamlit as st
-from openai import OpenAI
+import openai  # Use the openai library directly
 import pdfplumber
 from io import BytesIO
 
-# Initialize OpenAI client
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+# Set the OpenAI API key
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Function to load CSS
 def load_css(file_name):
@@ -32,8 +32,8 @@ def get_recommendations(text, employment_type, gender, experience, age, location
         system_message = "You are a helpful assistant."
 
     try:
-        response = client.chat_completions.create(
-            model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": prompt}
