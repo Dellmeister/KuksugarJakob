@@ -34,6 +34,15 @@ button {
     padding-top: 0; /* Remove additional padding from top */
 }
 
+/* Styling for the sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px; /* adjust as needed */
+    height: 100%;
+    overflow: auto;
+}
 /* Add more styles as needed */
 
 /* styles.css */
