@@ -85,11 +85,11 @@ def main_page():
     Our AI-driven recommendations ensure that your job ads are optimized for clarity, attractiveness, and relevance.</p>
     <h3>Our Team</h3>
     <ul>
-        <li><a href="https://www.linkedin.com/in/b-nilsson/" target="_blank">Brandon Nilsson</a></li>
+        <li>Brandon Nilsson (<a href="https://www.linkedin.com/in/b-nilsson/" target="_blank">LinkedIn</a>)</li>
         <li>Jakob Delin</li>
-        <li><a href="https://www.linkedin.com/in/molly-korse-a4754b192/" target="_blank">Molly Korse</a></li>
-        <li><a href="https://www.linkedin.com/in/kedinpetmark/" target="_blank">Peter Markus</a></li>
-        <li><a href="https://www.linkedin.com/in/tobias-magnusson-333650194/" target="_blank">Tobias Magnusson</a></li>
+        <li>Molly Korse (<a href="https://www.linkedin.com/in/molly-korse-a4754b192/" target="_blank">LinkedIn</a>)</li>
+        <li>Peter Markus (<a href="https://www.linkedin.com/in/kedinpetmark/" target="_blank">LinkedIn</a>)</li>
+        <li>Tobias Magnusson (<a href="https://www.linkedin.com/in/tobias-magnusson-333650194/" target="_blank">LinkedIn</a>)</li>
     </ul>
     <p>Check out our GitHub repository: <a href="https://github.com/BarreBN/CoRecruit.git" target="_blank">CoRecruit</a></p>
     """, unsafe_allow_html=True)
