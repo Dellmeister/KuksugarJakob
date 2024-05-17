@@ -21,7 +21,7 @@ def load_css(file_name):
 # Load the CSS
 load_css('styles.css')
 
-def get_recommendations(text, gender, experience, age, language, employment_type, location, driving_license, education):
+def get_recommendations(text, experience, language, employment_type, location, driving_license, education):
     if language == 'Swedish':
         prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {experience}, {location}, {driving_license} och {education}. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
@@ -65,12 +65,11 @@ load_css('styles.css')
 st.sidebar.title('Options')
 
 # Add a language selection option
-language = st.sidebar.radio('Language', ['English', 'Swedish'])
-
-employment_type = st.sidebar.radio('Employment Type', ['N/A', 'Full time', 'Part time'])
-experience = st.sidebar.radio('Experience Preference', ['N/A', 'Entry Level', 'Mid Level', 'Experienced'])
-location = st.sidebar.radio('Location', ['N/A', 'On-Site', 'Hybrid', 'Remote'])
-driving_license = st.sidebar.radio('Driving License', ['N/A', 'Required', 'Not Required'])
+experience = st.sidebar.slider('Experience', 0, 50, 10)
+language = st.sidebar.selectbox('Language', ['English', 'Swedish'])
+employment_type = st.sidebar.selectbox('Employment Type', ['Full Time', 'Part Time'])
+location = st.sidebar.text_input('Location', 'Stockholm')
+driving_license = st.sidebar.checkbox('Driving License')
 education = st.sidebar.radio('Education', ['N/A', 'Gymnasial', 'Eftergymnasial/Universitet'])
 
 # Main Area
