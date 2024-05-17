@@ -1,11 +1,11 @@
 import os
 import streamlit as st
-from openai import OpenAI
+import openai
 from io import BytesIO
 from docx import Document
 
 # Initialize OpenAI client with the API key from Streamlit secrets
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Function to load CSS
 def load_css(file_name):
@@ -29,14 +29,15 @@ def get_recommendations(text, experience, language, employment_type, location, d
         prompt = f"{text}\n\nI have a job posting and I want to improve it based on certain criteria. The ideal candidate for my job posting has the following characteristics: {employment_type}, {experience}, {location}, {driving_license} and {education}. Can you provide an overall assessment of the job posting and comment on specific sentences, words, or paragraphs that can be improved or changed to better attract the ideal candidate? Write the answer in English."
         system_message = "You are a helpful assistant."
 
-    response = client.chat_completions.create(
-        model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",  # Use your fine-tuned chat model
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": system_message},
             {"role": "user", "content": prompt}
         ],
         max_tokens=500,
-        temperature=0.7)
+        temperature=0.7
+    )
     return response.choices[0].message['content']
 
 # Function to read file
@@ -132,7 +133,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Render the selected page based on URL parameter
-query_params = st.experimental_get_query_params()
+query_params = st.query_params()
 page = query_params.get("page", ["main"])[0]
 
 if page == "main":
