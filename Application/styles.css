@@ -1,61 +1,69 @@
+/* styles.css */
+
 /* General body styling */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0; /* Changed to a lighter background */
+    background-color: #00547e; /* Background color */
 }
 
-/* Styling for headers */
-h1, h2, h3, h4, h5, h6 {
-    color: #333;
+/* Styling for h1 */
+h1 {
+    color: #0046af;
+    font-family: Papyrus, sans-serif;
+}
+
+/* Styling for highlighted text in h1 */
+h1 .highlight {
+    color: #ff0000; /* Change to your preferred color */
+    font-weight: bold;
+}
+
+<input type="text" name="myTextbox" id="myTextbox">
+    <!-- Rest of your HTML content -->
+
+/* Styling for the textbox */
+#myTextbox {
+    width: 50%; /* Full width */
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+/* Styling for other headers */
+h2, h3, h4, h5, h6 {
+    color: #0046af;
+    font-family: Papyrus, sans-serif; /* Add your preferred font here */
 }
 
 /* Styling for buttons */
 button {
     background-color: #4CAF50; /* Green */
     border: none;
-    color: white;
-    padding: 1px 1px;
+    color: rgba(255, 255, 255, 0);
+    padding: 10px 20px;
     text-align: center;
     text-decoration: none;
+    font-family: Papyrus;
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
 }
 
 /* Custom styles for Streamlit sidebar */
-.css-1d391kg {
-    padding-top: 300px; /* Adjust this value to move sidebar content higher */
-}
-
-.css-1d391kg .css-1lcbmhc, .css-1d391kg .css-1k7bsiw {
-    padding-top: 0; /* Remove additional padding from top */
+[data-testid="stSidebar"] {
+    background-color: #00488838; /* Dark background for sidebar */
+    color: white;
 }
 
 /* Styling for the sidebar */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 200px; /* adjust as needed */
-    height: 100%;
-    overflow: auto;
-}
-/* Add more styles as needed */
-
-/* styles.css */
-
-[data-testid="stSidebar"] .css-17eq0hr {
-    padding: 10px;
+[data-testid="stSidebar"] .css-1d391kg {
+    padding-top: 10px; /* Adjust padding */
 }
 
 /* Styling the radio buttons */
 [data-testid="stSidebar"] .css-1inwz65 {
     color: white;
 }
-*/
 
 /* Main content adjustments */
 .main .block-container {
@@ -63,4 +71,5 @@ button {
     padding-left: 2rem; /* Adjust left padding */
     padding-right: 2rem; /* Adjust right padding */
     padding-bottom: 2rem; /* Adjust bottom padding */
+    background-color: #ffffff00; /* Background color for main content */
 }
