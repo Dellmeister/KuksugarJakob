@@ -5,7 +5,7 @@ from io import BytesIO
 from docx import Document
 
 # Initialize OpenAI client with the API key from Streamlit secrets
-openai_api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # Function to load CSS
 def load_css(file_name):
@@ -22,8 +22,6 @@ def load_css(file_name):
 load_css('styles.css')
 
 def get_recommendations(text, experience, language, employment_type, location, driving_license, education):
-    client = OpenAI(api_key=openai_api_key)
-    
     if language == 'Swedish':
         prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {experience}, {location}, {driving_license} och {education}. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
@@ -31,7 +29,7 @@ def get_recommendations(text, experience, language, employment_type, location, d
         prompt = f"{text}\n\nI have a job posting and I want to improve it based on certain criteria. The ideal candidate for my job posting has the following characteristics: {employment_type}, {experience}, {location}, {driving_license} and {education}. Can you provide an overall assessment of the job posting and comment on specific sentences, words, or paragraphs that can be improved or changed to better attract the ideal candidate? Write the answer in English."
         system_message = "You are a helpful assistant."
 
-    response = client.Completion.create(
+    response = client.chat_completions.create(
         model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",  # Use your fine-tuned chat model
         messages=[
             {"role": "system", "content": system_message},
