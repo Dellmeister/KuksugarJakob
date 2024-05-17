@@ -133,7 +133,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Render the selected page based on URL parameter
-query_params = st.query_params()
+query_params = st.query_params
 page = query_params.get("page", ["main"])[0]
 
 if page == "main":
