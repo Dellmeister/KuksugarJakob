@@ -1,11 +1,12 @@
 import os
 import streamlit as st
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 from io import BytesIO
 from docx import Document
 
 # Initialize OpenAI client with the API key from Streamlit secrets
-openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Function to load CSS
 def load_css(file_name):
@@ -29,16 +30,14 @@ def get_recommendations(text, experience, language, employment_type, location, d
         prompt = f"{text}\n\nI have a job posting and I want to improve it based on certain criteria. The ideal candidate for my job posting has the following characteristics: {employment_type}, {experience}, {location}, {driving_license} and {education}. Can you provide an overall assessment of the job posting and comment on specific sentences, words, or paragraphs that can be improved or changed to better attract the ideal candidate? Write the answer in English."
         system_message = "You are a helpful assistant."
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": system_message},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=500,
-        temperature=0.7
-    )
-    return response.choices[0].message['content']
+    response = client.chat.completions.create(model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": system_message},
+        {"role": "user", "content": prompt}
+    ],
+    max_tokens=500,
+    temperature=0.7)
+    return response.choices[0].message.content
 
 # Function to read file
 def read_file(file):
@@ -146,7 +145,7 @@ if page == "main":
     location = st.sidebar.selectbox('On-site', ['Yes', 'No', 'Hybrid'])
     education = st.sidebar.selectbox('Education', ['Not applicable', 'Upper Secondary School', 'Higher Education'])
     driving_license = st.sidebar.checkbox('Driving License')
-    
+
     main_page()
 elif page == "tutorial":
     tutorial_page()
