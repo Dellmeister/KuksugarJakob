@@ -65,7 +65,7 @@ load_css('styles.css')
 st.sidebar.title('Options')
 
 # Add a language selection option
-experience = st.sidebar.slider('Experience (years)', 0, 50, 10)
+experience = st.sidebar.slider('Experience (years)', 0, 10)
 language = st.sidebar.selectbox('Language', ['English', 'Swedish'])
 employment_type = st.sidebar.selectbox('Employment Type', ['Full Time', 'Part Time'])
 location = st.sidebar.selectbox('On-site', ['Yes', 'No', 'Hybrid'])
