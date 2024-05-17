@@ -69,8 +69,8 @@ experience = st.sidebar.slider('Experience (years)', 0, 50, 10)
 language = st.sidebar.selectbox('Language', ['English', 'Swedish'])
 employment_type = st.sidebar.selectbox('Employment Type', ['Full Time', 'Part Time'])
 location = st.sidebar.selectbox('On-site', ['Yes', 'No', 'Hybrid'])
-driving_license = st.sidebar.checkbox('Driving License')
 education = st.sidebar.selectbox('Education', ['Not applicable', 'Upper Secondary School', 'Higher Education'])
+driving_license = st.sidebar.checkbox('Driving License')
 
 # Main Area
 st.title('CoRecruit AI')
