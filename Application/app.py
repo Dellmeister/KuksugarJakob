@@ -85,7 +85,7 @@ if uploaded_file is not None:
 
         # Use the GPT API to recommend changes if text extraction is successful
         if text:
-            recommendations = get_recommendations(text, gender, experience, age, language, employment_type, location, driving_license, education)
+            recommendations = get_recommendations(text, experience, language, employment_type, location, driving_license, education)
             st.subheader("Recommendations:")
             st.write(recommendations)
         else:
