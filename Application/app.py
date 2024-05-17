@@ -68,9 +68,9 @@ st.sidebar.title('Options')
 experience = st.sidebar.slider('Experience (years)', 0, 50, 10)
 language = st.sidebar.selectbox('Language', ['English', 'Swedish'])
 employment_type = st.sidebar.selectbox('Employment Type', ['Full Time', 'Part Time'])
-location = st.sidebar.selectbox('On-site', 'Yes, No, Hybrid')
+location = st.sidebar.selectbox('On-site', 'Yes', 'No', 'Hybrid')
 driving_license = st.sidebar.checkbox('Driving License')
-education = st.sidebar.radio('Education', ['N/A', 'Gymnasial', 'Eftergymnasial/Universitet'])
+education = st.sidebar.radio('Education', ['N/A', 'High School/Upper Secondary', 'Higher Education/University'])
 
 # Main Area
 st.title('CoRecruit AI')
