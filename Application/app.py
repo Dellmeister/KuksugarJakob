@@ -83,6 +83,15 @@ def main_page():
     <h2>About Us</h2>
     <p>Welcome to CoRecruit AI, a platform designed to help you refine your job postings and attract the ideal candidates.
     Our AI-driven recommendations ensure that your job ads are optimized for clarity, attractiveness, and relevance.</p>
+    <h3>Our Team</h3>
+    <ul>
+        <li><a href="https://www.linkedin.com/in/b-nilsson/" target="_blank">Brandon Nilsson</a></li>
+        <li>Jakob Delin</li>
+        <li><a href="https://www.linkedin.com/in/molly-korse-a4754b192/" target="_blank">Molly Korse</a></li>
+        <li><a href="https://www.linkedin.com/in/kedinpetmark/" target="_blank">Peter Markus</a></li>
+        <li><a href="https://www.linkedin.com/in/tobias-magnusson-333650194/" target="_blank">Tobias Magnusson</a></li>
+    </ul>
+    <p>Check out our GitHub repository: <a href="https://github.com/BarreBN/CoRecruit.git" target="_blank">CoRecruit</a></p>
     """, unsafe_allow_html=True)
 
 def tutorial_page():
