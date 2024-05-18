@@ -1,18 +1,14 @@
-/* Use a sans-serif font */
-body, h1, h2, h3, h4, h5, h6, p, li, a {
-    font-family: 'Arial', sans-serif;
-}
-
-/* Light mode text color */
+/* Test Style: Adding a background color */
 body {
-    color: #007ACC;  /* A blue color that looks good in light mode */
+    font-family: 'Arial', sans-serif;
+    color: #007ACC;  /* Light mode text color */
     background-color: #f0f0f0; /* Light gray background to test */
 }
 
 /* Dark mode text color */
 @media (prefers-color-scheme: dark) {
     body {
-        color: #00CED1;  /* A turquoise color that looks good in dark mode */
+        color: #00CED1;  /* Dark mode text color */
         background-color: #333333; /* Dark gray background to test */
     }
 }
@@ -47,3 +43,5 @@ body {
 .stSidebar .stCheckbox {
     color: #007ACC;
 }
+
+/* Unique comment to bypass cache */
