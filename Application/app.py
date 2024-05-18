@@ -124,18 +124,19 @@ load_css('styles.css')
 # Top navigation with clickable titles
 st.markdown("""
 <nav style="display: flex; justify-content: space-around; background-color: #f0f0f0; padding: 10px;">
-    <a href="?page=main" style="text-decoration: none; font-weight: bold;" onclick="loadPage('main'); return false;">Home</a>
-    <a href="?page=tutorial" style="text-decoration: none; font-weight: bold;" onclick="loadPage('tutorial'); return false;">Tutorial</a>
-    <a href="?page=faq" style="text-decoration: none; font-weight: bold;" onclick="loadPage('faq'); return false;">FAQ</a>
+    <a href="?page=main" style="text-decoration: none; font-weight: bold;">Home</a>
+    <a href="?page=tutorial" style="text-decoration: none; font-weight: bold;">Tutorial</a>
+    <a href="?page=faq" style="text-decoration: none; font-weight: bold;">FAQ</a>
 </nav>
 <hr>
 """, unsafe_allow_html=True)
 
-# Render the selected page based on URL parameter
-query_params = st.query_params
-page = query_params.get("page", ["main"])[0]
+# Manage page navigation with session state
+if 'page' not in st.session_state:
+    st.session_state.page = 'main'
 
-if page == "main":
+# Render the selected page based on session state
+if st.session_state.page == 'main':
     # Sidebar options only for the main page
     st.sidebar.title('Options')
 
@@ -147,19 +148,31 @@ if page == "main":
     driving_license = st.sidebar.checkbox('Driving License')
 
     main_page()
-elif page == "tutorial":
+elif st.session_state.page == 'tutorial':
     tutorial_page()
-elif page == "faq":
+elif st.session_state.page == 'faq':
     faq_page()
 
 # JavaScript to handle navigation without page reload
 st.markdown("""
 <script type="text/javascript">
-    function loadPage(page) {
-        const urlParams = new URLSearchParams(window.location.search);
-        urlParams.set('page', page);
-        window.history.pushState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
-        window.dispatchEvent(new Event('popstate'));
-    }
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const page = event.target.getAttribute('href').split('=')[1];
+            window.parent.postMessage({ page: page }, '*');
+        });
+    });
+
+    window.addEventListener('message', (event) => {
+        if (event.data.page) {
+            const page = event.data.page;
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('page', page);
+            window.history.pushState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+            Streamlit.setComponentValue(page);
+        }
+    });
 </script>
 """, unsafe_allow_html=True)
