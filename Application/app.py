@@ -87,7 +87,6 @@ if uploaded_file is not None:
 
 st.header('Tutorial')
 st.write("""
-### How to Use CoRecruit AI
 1. Upload your job posting in either .txt or .docx format.
 2. Adjust the parameters in the sidebar to match your ideal candidate's profile.
 3. Click 'Run' to get AI-generated recommendations for improving your job posting.
@@ -95,8 +94,6 @@ st.write("""
 
 st.header('FAQ')
 st.write("""
-### Frequently Asked Questions
-
 **Q: What file formats are supported?**
 A: We support .txt and .docx files.
 
@@ -109,7 +106,6 @@ A: Yes, we prioritize your data privacy and security. Your uploaded files and da
 
 st.header('About Us')
 st.markdown("""
-<h2>About Us</h2>
 <p>Welcome to CoRecruit AI, a platform designed to help you refine your job postings and attract the ideal candidates.
 Our AI-driven recommendations ensure that your job ads are optimized for clarity, attractiveness, and relevance.</p>
 <h3>Our Team</h3>
