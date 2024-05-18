@@ -1,47 +1,49 @@
-/* Test Style: Adding a background color */
+/* Use a sans-serif font */
+body, h1, h2, h3, h4, h5, h6, p, li, a {
+    font-family: 'Arial', sans-serif !important;
+}
+
+/* Light mode text color */
 body {
-    font-family: 'Arial', sans-serif;
-    color: #007ACC;  /* Light mode text color */
-    background-color: #f0f0f0; /* Light gray background to test */
+    color: #007ACC !important;  /* A blue color that looks good in light mode */
+    background-color: #f0f0f0 !important; /* Light gray background to test */
 }
 
 /* Dark mode text color */
 @media (prefers-color-scheme: dark) {
     body {
-        color: #00CED1;  /* Dark mode text color */
-        background-color: #333333; /* Dark gray background to test */
+        color: #00CED1 !important;  /* A turquoise color that looks good in dark mode */
+        background-color: #333333 !important; /* Dark gray background to test */
     }
 }
 
 /* General styling for other elements to match the theme */
 .stButton>button {
-    background-color: #007ACC;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
+    background-color: #007ACC !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    border-radius: 5px !important;
 }
 
 .stButton>button:hover {
-    background-color: #005F99;
+    background-color: #005F99 !important;
 }
 
 .stFileUploader {
-    color: #007ACC;
+    color: #007ACC !important;
 }
 
 .stSidebar .stSlider {
-    color: #007ACC;
+    color: #007ACC !important;
 }
 
 .stSidebar .stSelectbox {
-    color: #007ACC;
+    color: #007ACC !important;
 }
 
 .stSidebar .stCheckbox {
-    color: #007ACC;
+    color: #007ACC !important;
 }
-
-/* Unique comment to bypass cache */
