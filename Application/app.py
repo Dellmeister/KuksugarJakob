@@ -19,7 +19,7 @@ def load_css(file_name):
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Load the CSS
-load_css('styles.css')
+load_css('/mnt/data/styles.css')
 
 def get_recommendations(text, experience, language, employment_type, location, driving_license, education):
     if language == 'Swedish':
