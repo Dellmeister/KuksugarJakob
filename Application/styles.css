@@ -6,14 +6,14 @@ body, h1, h2, h3, h4, h5, h6, p, li, a {
 /* Light mode text color */
 body {
     color: #007ACC;  /* A blue color that looks good in light mode */
-    background-color: #ffffff; /* Ensure the background is white for light mode */
+    background-color: #f0f0f0; /* Light gray background to test */
 }
 
 /* Dark mode text color */
 @media (prefers-color-scheme: dark) {
     body {
         color: #00CED1;  /* A turquoise color that looks good in dark mode */
-        background-color: #000000; /* Ensure the background is black for dark mode */
+        background-color: #333333; /* Dark gray background to test */
     }
 }
 
