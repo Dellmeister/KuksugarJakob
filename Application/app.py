@@ -58,7 +58,7 @@ def read_file(file):
         return ""
 
 # Main page content
-st.title('CoRecruit')
+st.title('CoRecruit AI')
 
 # Sidebar options
 st.sidebar.title('Options')
@@ -69,7 +69,6 @@ location = st.sidebar.selectbox('On-site', ['Yes', 'No', 'Hybrid'])
 education = st.sidebar.selectbox('Education', ['Not applicable', 'Upper Secondary School', 'Higher Education'])
 driving_license = st.sidebar.checkbox('Driving License')
 
-st.header('Recruitment AI Tool')
 uploaded_file = st.file_uploader("Upload a job posting", type=['txt', 'docx'])
 
 if uploaded_file is not None:
