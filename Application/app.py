@@ -1,12 +1,11 @@
 import os
 import streamlit as st
 from openai import OpenAI
-
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 from io import BytesIO
 from docx import Document
 
 # Initialize OpenAI client with the API key from Streamlit secrets
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # Function to load CSS
 def load_css(file_name):
@@ -58,121 +57,68 @@ def read_file(file):
         st.error("Unsupported file type.")
         return ""
 
-# Define pages
-def main_page():
-    st.title('CoRecruit AI')
+# Main page content
+st.title('CoRecruit AI')
 
-    uploaded_file = st.file_uploader("Upload a job posting", type=['txt', 'docx'])
+# Sidebar options
+st.sidebar.title('Options')
+experience = st.sidebar.slider('Experience (years)', 0, 10)
+language = st.sidebar.selectbox('Language', ['English', 'Swedish'])
+employment_type = st.sidebar.selectbox('Employment Type', ['Full Time', 'Part Time'])
+location = st.sidebar.selectbox('On-site', ['Yes', 'No', 'Hybrid'])
+education = st.sidebar.selectbox('Education', ['Not applicable', 'Upper Secondary School', 'Higher Education'])
+driving_license = st.sidebar.checkbox('Driving License')
 
-    if uploaded_file is not None:
-        if st.button('Run'):
-            # Process the text from the job posting
-            text = read_file(uploaded_file)
+st.header('The AI Tool')
+uploaded_file = st.file_uploader("Upload a job posting", type=['txt', 'docx'])
 
-            # Use the GPT API to recommend changes if text extraction is successful
-            if text:
-                recommendations = get_recommendations(text, experience, language, employment_type, location, driving_license, education)
-                st.subheader("Recommendations:")
-                st.write(recommendations)
-            else:
-                st.error("Failed to extract text from the uploaded file.")
+if uploaded_file is not None:
+    if st.button('Run'):
+        # Process the text from the job posting
+        text = read_file(uploaded_file)
 
-    # About Us Section
-    st.markdown("""
-    <hr>
-    <h2>About Us</h2>
-    <p>Welcome to CoRecruit AI, a platform designed to help you refine your job postings and attract the ideal candidates.
-    Our AI-driven recommendations ensure that your job ads are optimized for clarity, attractiveness, and relevance.</p>
-    <h3>Our Team</h3>
-    <ul>
-        <li>Brandon Nilsson (<a href="https://www.linkedin.com/in/b-nilsson/" target="_blank">LinkedIn</a>)</li>
-        <li>Jakob Delin</li>
-        <li>Molly Korse (<a href="https://www.linkedin.com/in/molly-korse-a4754b192/" target="_blank">LinkedIn</a>)</li>
-        <li>Peter Markus (<a href="https://www.linkedin.com/in/kedinpetmark/" target="_blank">LinkedIn</a>)</li>
-        <li>Tobias Magnusson (<a href="https://www.linkedin.com/in/tobias-magnusson-333650194/" target="_blank">LinkedIn</a>)</li>
-    </ul>
-    <p>Check out our GitHub repository: <a href="https://github.com/BarreBN/CoRecruit.git" target="_blank">CoRecruit</a></p>
-    """, unsafe_allow_html=True)
+        # Use the GPT API to recommend changes if text extraction is successful
+        if text:
+            recommendations = get_recommendations(text, experience, language, employment_type, location, driving_license, education)
+            st.subheader("Recommendations:")
+            st.write(recommendations)
+        else:
+            st.error("Failed to extract text from the uploaded file.")
 
-def tutorial_page():
-    st.title('Tutorial')
-    st.write("""
-    ### How to Use CoRecruit AI
-    1. Upload your job posting in either .txt or .docx format.
-    2. Adjust the parameters in the sidebar to match your ideal candidate's profile.
-    3. Click 'Run' to get AI-generated recommendations for improving your job posting.
-    """)
+st.header('Tutorial')
+st.write("""
+### How to Use CoRecruit AI
+1. Upload your job posting in either .txt or .docx format.
+2. Adjust the parameters in the sidebar to match your ideal candidate's profile.
+3. Click 'Run' to get AI-generated recommendations for improving your job posting.
+""")
 
-def faq_page():
-    st.title('FAQ')
-    st.write("""
-    ### Frequently Asked Questions
+st.header('FAQ')
+st.write("""
+### Frequently Asked Questions
 
-    **Q: What file formats are supported?**
-    A: We support .txt and .docx files.
+**Q: What file formats are supported?**
+A: We support .txt and .docx files.
 
-    **Q: How does the AI provide recommendations?**
-    A: The AI analyzes your job posting based on the criteria you set and suggests improvements to better attract your ideal candidate.
+**Q: How does the AI provide recommendations?**
+A: The AI analyzes your job posting based on the criteria you set and suggests improvements to better attract your ideal candidate.
 
-    **Q: Is my data secure?**
-    A: Yes, we prioritize your data privacy and security. Your uploaded files and data are not stored or shared.
-    """)
+**Q: Is my data secure?**
+A: Yes, we prioritize your data privacy and security. Your uploaded files and data are not stored or shared.
+""")
 
-# Load CSS
-load_css('styles.css')
-
-# Top navigation with clickable titles
+st.header('About Us')
 st.markdown("""
-<nav style="display: flex; justify-content: space-around; background-color: #f0f0f0; padding: 10px;">
-    <a href="?page=main" style="text-decoration: none; font-weight: bold;">Home</a>
-    <a href="?page=tutorial" style="text-decoration: none; font-weight: bold;">Tutorial</a>
-    <a href="?page=faq" style="text-decoration: none; font-weight: bold;">FAQ</a>
-</nav>
-<hr>
-""", unsafe_allow_html=True)
-
-# Manage page navigation with session state
-if 'page' not in st.session_state:
-    st.session_state.page = 'main'
-
-# Render the selected page based on session state
-if st.session_state.page == 'main':
-    # Sidebar options only for the main page
-    st.sidebar.title('Options')
-
-    experience = st.sidebar.slider('Experience (years)', 0, 10)
-    language = st.sidebar.selectbox('Language', ['English', 'Swedish'])
-    employment_type = st.sidebar.selectbox('Employment Type', ['Full Time', 'Part Time'])
-    location = st.sidebar.selectbox('On-site', ['Yes', 'No', 'Hybrid'])
-    education = st.sidebar.selectbox('Education', ['Not applicable', 'Upper Secondary School', 'Higher Education'])
-    driving_license = st.sidebar.checkbox('Driving License')
-
-    main_page()
-elif st.session_state.page == 'tutorial':
-    tutorial_page()
-elif st.session_state.page == 'faq':
-    faq_page()
-
-# JavaScript to handle navigation without page reload
-st.markdown("""
-<script type="text/javascript">
-    const navLinks = document.querySelectorAll('nav a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault();
-            const page = event.target.getAttribute('href').split('=')[1];
-            window.parent.postMessage({ page: page }, '*');
-        });
-    });
-
-    window.addEventListener('message', (event) => {
-        if (event.data.page) {
-            const page = event.data.page;
-            const urlParams = new URLSearchParams(window.location.search);
-            urlParams.set('page', page);
-            window.history.pushState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
-            Streamlit.setComponentValue(page);
-        }
-    });
-</script>
+<h2>About Us</h2>
+<p>Welcome to CoRecruit AI, a platform designed to help you refine your job postings and attract the ideal candidates.
+Our AI-driven recommendations ensure that your job ads are optimized for clarity, attractiveness, and relevance.</p>
+<h3>Our Team</h3>
+<ul>
+    <li>Brandon Nilsson (<a href="https://www.linkedin.com/in/b-nilsson/" target="_blank">LinkedIn</a>)</li>
+    <li>Jakob Delin</li>
+    <li>Molly Korse (<a href="https://www.linkedin.com/in/molly-korse-a4754b192/" target="_blank">LinkedIn</a>)</li>
+    <li>Peter Markus (<a href="https://www.linkedin.com/in/kedinpetmark/" target="_blank">LinkedIn</a>)</li>
+    <li>Tobias Magnusson (<a href="https://www.linkedin.com/in/tobias-magnusson-333650194/" target="_blank">LinkedIn</a>)</li>
+</ul>
+<p>Check out our GitHub repository: <a href="https://github.com/BarreBN/CoRecruit.git" target="_blank">CoRecruit</a></p>
 """, unsafe_allow_html=True)
