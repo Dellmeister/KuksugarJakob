@@ -15,13 +15,8 @@ def load_css(file_name):
     # Construct the absolute path to the CSS file
     file_path = os.path.join(script_dir, file_name)
 
-    # Debug: print file path and load CSS
-    st.write(f"Loading CSS from {file_path}")
-
     with open(file_path) as f:
-        css_content = f.read()
-        st.markdown(f'<style>{css_content}</style>', unsafe_allow_html=True)
-        st.write("CSS Loaded Successfully")  # Debug statement
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Load the CSS
 load_css('styles.css')
