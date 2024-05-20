@@ -86,7 +86,7 @@ def read_file(file):
     elif file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
         try:
             doc = Document(BytesIO(file.getvalue()))
-            return '\n.join([para.text for para in doc.paragraphs])
+            return '\n'.join([para.text for para in doc.paragraphs])
         except Exception as e:
             st.error(f"Error reading DOCX file: {e}")
             return ""
