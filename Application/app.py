@@ -86,7 +86,7 @@ def read_file(file):
     elif file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
         try:
             doc = Document(BytesIO(file.getvalue()))
-            return '\n'.join([para.text for para in doc.paragraphs])
+            return '\n.join([para.text for para in doc.paragraphs])
         except Exception as e:
             st.error(f"Error reading DOCX file: {e}")
             return ""
@@ -100,7 +100,8 @@ def image_to_base64(image_path):
         return base64.b64encode(img_file.read()).decode("utf-8")
 
 # Convert logo to base64
-logo_base64 = image_to_base64("logo_transparent.png")
+logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logo_transparent.png")
+logo_base64 = image_to_base64(logo_path)
 
 # Main page content
 st.markdown(
