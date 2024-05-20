@@ -165,7 +165,7 @@ Our AI-driven recommendations ensure that your job ads are optimized for clarity
 <ul>
     <li>Brandon Nilsson (<a href="https://www.linkedin.com/in/b-nilsson/" target="_blank">LinkedIn</a>)</li>
     <li>Jakob Delin</li>
-    <li>Molly Korse (<a href="https://www.linkedin.com/in/molly-korse-a4754b192/" target="_blank">LinkedIn</a>)</li>
+    <li>Molly Korse (<a href="https://www.linkedin.com/in/molkor/" target="_blank">LinkedIn</a>)</li>
     <li>Peter Markus (<a href="https://www.linkedin.com/in/kedinpetmark/" target="_blank">LinkedIn</a>)</li>
     <li>Tobias Magnusson (<a href="https://www.linkedin.com/in/tobias-magnusson-333650194/" target="_blank">LinkedIn</a>)</li>
 </ul>
