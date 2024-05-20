@@ -142,6 +142,12 @@ if uploaded_file is not None:
 st.markdown('&nbsp;', unsafe_allow_html=True)
 # Add some space
 st.markdown('&nbsp;', unsafe_allow_html=True)
+# Add some space
+st.markdown('&nbsp;', unsafe_allow_html=True)
+# Add some space
+st.markdown('&nbsp;', unsafe_allow_html=True)
+# Add some space
+st.markdown('&nbsp;', unsafe_allow_html=True)
 
 st.header('Tutorial')
 st.write("""
