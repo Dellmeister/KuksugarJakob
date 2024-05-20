@@ -3,6 +3,7 @@ import streamlit as st
 from openai import OpenAI
 from io import BytesIO
 from docx import Document
+import base64
 import tiktoken
 
 # Initialize OpenAI client with the API key from Streamlit secrets
@@ -93,12 +94,19 @@ def read_file(file):
         st.error("Unsupported file type.")
         return ""
 
+# Function to convert image to base64
+def image_to_base64(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode("utf-8")
+
+# Convert logo to base64
+logo_base64 = image_to_base64("logo_transparent.png")
+
 # Main page content
-logo_path = "logo_transparent.png"
 st.markdown(
     f"""
     <div style="display: flex; align-items: center;">
-        <img src="data:image/png;base64,{st.image(logo_path, use_column_width=True)}" style="height: 50px; margin-right: 10px;">
+        <img src="data:image/png;base64,{logo_base64}" style="height: 50px; margin-right: 10px;">
         <h1 style="display: inline;">CoRecruit AI</h1>
     </div>
     """,
