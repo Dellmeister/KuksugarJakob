@@ -139,9 +139,9 @@ if uploaded_file is not None:
             st.error("Failed to extract text from the uploaded file.")
 
 # Add some space
-    st.sidebar.markdown('&nbsp;', unsafe_allow_html=True)
+st.markdown('&nbsp;', unsafe_allow_html=True)
 # Add some space
-    st.sidebar.markdown('&nbsp;', unsafe_allow_html=True)
+st.markdown('&nbsp;', unsafe_allow_html=True)
 
 st.header('Tutorial')
 st.write("""
