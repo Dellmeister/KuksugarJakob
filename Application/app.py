@@ -94,7 +94,16 @@ def read_file(file):
         return ""
 
 # Main page content
-st.title('CoRecruit AI')
+logo_path = "logo_transparent.png"
+st.markdown(
+    f"""
+    <div style="display: flex; align-items: center;">
+        <img src="data:image/png;base64,{st.image(logo_path, use_column_width=True)}" style="height: 50px; margin-right: 10px;">
+        <h1 style="display: inline;">CoRecruit AI</h1>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Sidebar options
 st.sidebar.title('Options')
