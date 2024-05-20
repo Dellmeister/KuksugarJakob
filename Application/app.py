@@ -138,13 +138,15 @@ if uploaded_file is not None:
         else:
             st.error("Failed to extract text from the uploaded file.")
 
+# Add some space
+st.markdown('&nbsp;', unsafe_allow_html=True)
+# Add some space
+st.markdown('&nbsp;', unsafe_allow_html=True)
+# Add some space
+st.markdown('&nbsp;', unsafe_allow_html=True)
+
 # Add some space and a downward arrow
 st.markdown("""
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
 &nbsp;
 &nbsp;
 &nbsp;
