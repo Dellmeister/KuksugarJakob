@@ -106,7 +106,7 @@ logo_base64 = image_to_base64(logo_path)
 # Main page content
 st.markdown(
     f"""
-    <div style="display: flex; align-items: center;">
+    <div style="display: flex; align-items: left;">
         <img src="data:image/png;base64,{logo_base64}" style="height: 175px; margin-right: 10px;">
         <h1 style="display: inline;">CoRecruit AI</h1>
     </div>
