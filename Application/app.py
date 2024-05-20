@@ -138,16 +138,14 @@ if uploaded_file is not None:
         else:
             st.error("Failed to extract text from the uploaded file.")
 
-# Add some space
-st.markdown('&nbsp;', unsafe_allow_html=True)
-# Add some space
-st.markdown('&nbsp;', unsafe_allow_html=True)
-# Add some space
-st.markdown('&nbsp;', unsafe_allow_html=True)
-# Add some space
-st.markdown('&nbsp;', unsafe_allow_html=True)
-# Add some space
-st.markdown('&nbsp;', unsafe_allow_html=True)
+# Add some space and a downward arrow
+st.markdown("""
+&nbsp;
+&nbsp;
+&nbsp;
+<div style='text-align: center;'><span style='font-size:50px;'>&#8595;</span></div>
+&nbsp;
+""", unsafe_allow_html=True)
 
 st.header('Tutorial')
 st.write("""
