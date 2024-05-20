@@ -138,6 +138,12 @@ if uploaded_file is not None:
         else:
             st.error("Failed to extract text from the uploaded file.")
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 st.header('Tutorial')
 st.write("""
 1. Upload your job posting in either .txt or .docx format.
