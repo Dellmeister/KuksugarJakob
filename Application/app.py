@@ -143,6 +143,11 @@ st.markdown("""
 &nbsp;
 &nbsp;
 &nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 <div style='text-align: center;'><span style='font-size:50px;'>&#8595;</span></div>
 &nbsp;
 """, unsafe_allow_html=True)
