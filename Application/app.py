@@ -116,9 +116,9 @@ st.markdown(
 
 # Sidebar options
 st.sidebar.title('Options')
-experience = st.sidebar.selectbox('Experience', ['Not applicable', '0-1 years','1-3 years','3-5 years','5-10 years','10+ years'])
 language = st.sidebar.selectbox('Language', ['English', 'Swedish'])
 employment_type = st.sidebar.selectbox('Employment Type', ['Full Time', 'Part Time'])
+experience = st.sidebar.selectbox('Experience', ['Not applicable', '0-1 years','1-3 years','3-5 years','5-10 years','10+ years'])
 location = st.sidebar.selectbox('On-site', ['Yes', 'No', 'Hybrid'])
 education = st.sidebar.selectbox('Education', ['Not applicable', 'Upper Secondary School', 'Higher Education'])
 driving_license = st.sidebar.checkbox('Driving License')
