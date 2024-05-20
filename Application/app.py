@@ -3,6 +3,7 @@ import streamlit as st
 from openai import OpenAI
 from io import BytesIO
 from docx import Document
+import tiktoken
 
 # Initialize OpenAI client with the API key from Streamlit secrets
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
@@ -21,12 +22,47 @@ def load_css(file_name):
 # Load the CSS
 load_css('styles.css')
 
-def get_recommendations(text, experience, language, employment_type, location, driving_license, education):
+# Function to read the context file
+def read_context(file_name):
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, file_name)
+    
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+# Read the context from the text file
+context_text = read_context('context.txt')
+
+# Function to count tokens
+def count_tokens(text):
+    encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
+    return len(encoding.encode(text))
+
+# Function to truncate text
+def truncate_text(text, max_tokens):
+    encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
+    tokens = encoding.encode(text)
+    if len(tokens) > max_tokens:
+        tokens = tokens[:max_tokens]
+    return encoding.decode(tokens)
+
+def get_recommendations(text, context, experience, language, employment_type, location, driving_license, education):
+    # Max tokens for the prompt
+    max_tokens = 16385 - 1000  # Keeping some buffer for response and system message
+    
+    combined_text = f"{context}\n\n{text}"
+    if count_tokens(combined_text) > max_tokens:
+        # Truncate context and text if they exceed max_tokens
+        context_tokens = max_tokens // 2
+        text_tokens = max_tokens - context_tokens
+        context = truncate_text(context, context_tokens)
+        text = truncate_text(text, text_tokens)
+    
     if language == 'Swedish':
-        prompt = f"{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {experience}, {location}, {driving_license} och {education}. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
+        prompt = f"{context}\n\n{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {experience}, {location}, {driving_license} och {education}. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
     else:  # Default to English
-        prompt = f"{text}\n\nI have a job posting and I want to improve it based on certain criteria. The ideal candidate for my job posting has the following characteristics: {employment_type}, {experience}, {location}, {driving_license} and {education}. Can you provide an overall assessment of the job posting and comment on specific sentences, words, or paragraphs that can be improved or changed to better attract the ideal candidate? Write the answer in English."
+        prompt = f"{context}\n\n{text}\n\nI have a job posting and I want to improve it based on certain criteria. The ideal candidate for my job posting has the following characteristics: {employment_type}, {experience}, {location}, {driving_license} and {education}. Can you provide an overall assessment of the job posting and comment on specific sentences, words, or paragraphs that can be improved or changed to better attract the ideal candidate? Write the answer in English."
         system_message = "You are a helpful assistant."
 
     response = client.chat.completions.create(model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
@@ -78,7 +114,7 @@ if uploaded_file is not None:
 
         # Use the GPT API to recommend changes if text extraction is successful
         if text:
-            recommendations = get_recommendations(text, experience, language, employment_type, location, driving_license, education)
+            recommendations = get_recommendations(text, context_text, experience, language, employment_type, location, driving_license, education)
             st.subheader("Recommendations:")
             st.write(recommendations)
         else:
