@@ -118,7 +118,7 @@ st.markdown(
 st.sidebar.markdown(
     f"""
     <div style="display: flex; align-items: center;">
-        <img src="data:image/png;base64,{logo_base64}" style="height: 120px;">
+        <img src="data:image/png;base64,{logo_base64}" style="height: 120px; margin-right: 15px;">
         <h1 style="display: inline;">CoRecruit AI</h1>
     </div>
     """,
