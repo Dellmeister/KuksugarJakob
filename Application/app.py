@@ -114,6 +114,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Display the logo in the sidebar
+st.sidebar.markdown(
+    f"""
+    <div style="display: flex; align-items: center;">
+        <img src="data:image/png;base64,{logo_base64}" style="height: 120px; margin-right: 15px;">
+        <h1 style="display: inline;">CoRecruit AI</h1>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # Sidebar options
 st.sidebar.title('Options')
 language = st.sidebar.selectbox('AI Response Language', ['English', 'Swedish'])
