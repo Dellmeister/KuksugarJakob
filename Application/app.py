@@ -121,6 +121,7 @@ st.sidebar.markdown(
         <img src="data:image/png;base64,{logo_base64}" style="height: 120px; margin-right: 15px;">
         <h1 style="display: inline;">CoRecruit AI</h1>
     </div>
+    <br>
     """,
     unsafe_allow_html=True
 )
