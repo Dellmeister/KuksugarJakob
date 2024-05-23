@@ -119,7 +119,7 @@ Tutorialdarkmode_base64 = image_to_base64(Tutorialdarkmode_path)
 st.markdown(
     f"""
     <div style="display: flex; justify-content: center;">
-        <img src="data:image/png;base64,{job_board_4_base64}" class="job_board_4" style="height: 300px;">
+        <img src="data:image/png;base64,{job_board_4_base64}" class="job_board_4" style="height: 280px;">
     </div>
     """,
     unsafe_allow_html=True
