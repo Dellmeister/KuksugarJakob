@@ -60,10 +60,10 @@ def get_recommendations(text, context, experience, language, employment_type, lo
         text = truncate_text(text, text_tokens)
     
     if language == 'Swedish':
-        prompt = f"{context}\n\n{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {experience}, {location}, {driving_license} och {education}. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
+        prompt = f"{context}\n\n{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {experience}, {location}, {driving_license} och {education} samt att den ska vara inklusiv och inte diskrimminera. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
     else:  # Default to English
-        prompt = f"{context}\n\n{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {experience}, {location}, {driving_license} och {education}. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Engelska."
+        prompt = f"{context}\n\n{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {experience}, {location}, {driving_license} och {education} samt att den ska vara inklusiv och inte diskrimminera. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Engelska."
         system_message = "You are a helpful assistant."
 
     response = client.chat.completions.create(model="ft:gpt-3.5-turbo-0125:personal::9N4jESmA",
@@ -103,27 +103,39 @@ def image_to_base64(image_path):
 logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logo_transparent.png")
 logo_base64 = image_to_base64(logo_path)
 
+# Convert topdescimage to base64
+job_board_4_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "job_board_4.png")
+job_board_4_base64 = image_to_base64(job_board_4_path)
+
+# Convert Tutorialdarkmode to base64
+Tutorialdarkmode_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Tutorialdarkmode.png")
+Tutorialdarkmode_base64 = image_to_base64(Tutorialdarkmode_path)
+
 # Main page content
+
+# Display image
 st.markdown(
     f"""
-    <div style="display: flex; align-items: center;">
-        <img src="data:image/png;base64,{logo_base64}" style="height: 120px; margin-right: 15px;">
-        <h1 style="display: inline;">CoRecruit AI</h1>
+    <div style="display: flex; justify-content: center;">
+        <img src="data:image/png;base64,{job_board_4_base64}" class="job_board_4" style="height: 300px;">
     </div>
     """,
     unsafe_allow_html=True
 )
+
 
 # Display the logo in the sidebar
 st.sidebar.markdown(
     f"""
     <div style="display: flex; align-items: center;">
         <img src="data:image/png;base64,{logo_base64}" style="height: 120px; margin-right: 15px;">
-        <h1 style="display: inline;">CoRecruit AI</h1>
+        <h1 style="text-align: center; font-size: 35px;"><span style="font-family: STsong;">CoRecruit</span> <br> AI</h1>
     </div>
+    <hr style='border:1px solid black'> 
     """,
     unsafe_allow_html=True
 )
+
 
 # Sidebar options
 st.sidebar.title('Options')
@@ -161,16 +173,19 @@ st.markdown("""
 &nbsp;
 &nbsp;
 &nbsp;
-<div style='text-align: center;'><span style='font-size:50px;'>&#8595;</span></div>
-&nbsp;
+<hr style='border:2px solid black'> 
 """, unsafe_allow_html=True)
 
-st.header('Tutorial')
-st.write("""
-1. Upload your job posting in either .txt or .docx format.
-2. Adjust the parameters in the sidebar to match your ideal candidate's profile.
-3. Click 'Run' to get AI-generated recommendations for improving your job posting.
-""")
+# Display image
+#st.markdown(
+#    f"""
+#    <div style="display: flex; justify-content: center;">
+#        <img src="data:image/png;base64,{Tutorialdarkmode_base64}" class="Tutorialdarkmode" style="height: 300px;">
+#    </div>
+#    """,
+#    unsafe_allow_html=True
+#)
+
 
 st.header('FAQ')
 st.write("""
@@ -181,7 +196,10 @@ A: We support .txt and .docx files.
 A: The AI analyzes your job posting based on the criteria you set and suggests improvements to better attract your ideal candidate.
 
 **Q: Is my data secure?**
-A: Yes, we prioritize your data privacy and security. Your uploaded files and data are not stored or shared.
+A: Yes, we prioritize your data privacy and security. CoRecruit AI does not store or share your uploaded files.
+
+**Q: How do you use ChatGPT?**
+A: We use ChatGPT to process and analyze the content of your job ad. By feeding the job ad and your specified criteria into ChatGPT, we can generate recommendations to enhance your job posting. This ensures that your ad is well-structured, appealing, and targeted to attract the right candidates.
 """)
 
 st.header('About Us')
