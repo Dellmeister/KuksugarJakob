@@ -60,10 +60,10 @@ def get_recommendations(text, context, experience, language, employment_type, lo
         text = truncate_text(text, text_tokens)
 
     if language == 'Swedish':
-        prompt = f"{context}\n\n{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {experience}, {location}, {driving_license} och {education} samt att den ska vara inklusiv och inte diskrimminera. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
+        prompt = f"{context}\n\n{text}\n\nJag har en jobbannons och jag vill förbättra den baserat på vissa kriterier. Den ideala kandidaten för min jobbannons har följande egenskaper: {employment_type}, {experience}, {location}, {driving_license} och {education}. Kan du ge en översiktlig bedömning av jobbannonsen och kommentera specifika meningar, ord eller stycken som kan förbättras eller ändras för att bättre attrahera den ideala kandidaten? Skriv svaret på Svenska."
         system_message = "Du är en hjälpsam assistent."
     else:  # Default to English
-        prompt = f"{context}\n\n{text}\n\nI have a job posting and I want to improve it based on certain criteria. The ideal candidate for my job posting has the following attributes: {employment_type}, {experience}, {location}, {driving_license}, and {education}. The job posting should also be inclusive and non-discriminatory. Can you provide an overview of the job posting and comment on specific sentences, words, or paragraphs that can be improved or changed to better attract the ideal candidate? Write the answer in English."
+        prompt = f"{context}\n\n{text}\n\nI have a job posting and I want to improve it based on certain criteria. The ideal candidate for my job posting has the following attributes: {employment_type}, {experience}, {location}, {driving_license}, and {education}. Can you provide an overview of the job posting and comment on specific sentences, words, or paragraphs that can be improved or changed to better attract the ideal candidate? Write the answer in English."
         system_message = "You are a helpful assistant."
 
     response = client.chat.completions.create(
